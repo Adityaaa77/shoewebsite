@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LA SOLE - International Shoes</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #0b1a3d;
+      color: #fff;
+      font-weight: 600;
+    }
+    .navbar, footer {
+      background-color: #00102e;
+    }
+    .jumbotron {
+      background: url('https://images.unsplash.com/photo-1619029635566-dfcd5e9b8d71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1200') no-repeat center center;
+      background-size: cover;
+      color: white;
+      padding: 100px 0;
+      text-align: center;
+      text-shadow: 2px 2px 4px #000;
+    }
+    .sale-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: red;
+      color: white;
+      padding: 5px 10px;
+      font-weight: bold;
+      border-radius: 5px;
+    }
+    .card-img-top {
+      height: 200px;
+      object-fit: cover;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card-img-top:hover {
+      transform: translateY(-10px) scale(1.05);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+    }
+    .search-bar {
+      max-width: 400px;
+      margin: auto;
+    }
+    .section-title {
+      text-align: center;
+      margin-bottom: 40px;
+      text-transform: uppercase;
+      color: #cac9c2;
+    }
+    .card {
+      background-color: #001f4d;
+      border: none;
+    }
+    .card-body {
+      color: #fff;
+    }
+    .btn-primary {
+      background-color: #e2e0d4;
+      color: #00102e;
+      font-weight: bold;
+    }
+    .btn-primary:hover {
+      background-color: #d4dddf;
+      color: #00102e;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#">LA SOLE</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#women">Women</a></li>
+          <li class="nav-item"><a class="nav-link" href="#men">Men</a></li>
+          <li class="nav-item"><a class="nav-link" href="#kids">Kids</a></li>
+          <li class="nav-item"><a class="nav-link" href="#sale">Monsoon Sale</a></li>
+        </ul>
+        <form class="d-flex" role="search" onsubmit="return filterShoes();">
+          <input class="form-control me-2" type="search" placeholder="Search (Men/Women/Kids)" id="searchInput">
+          <button class="btn btn-outline-warning" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Breadcrumb -->
+  <nav aria-label="breadcrumb" class="bg-dark py-2">
+    <div class="container">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="#" class="text-decoration-none text-warning">Home</a></li>
+        <li class="breadcrumb-item active text-white" aria-current="page">Shoes</li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- Jumbotron -->
+  <div class="jumbotron mb-5">
+    <h1 class="display-4">Step Into Style</h1>
+    <p class="lead">Discover the best international shoe brands for Men, Women, and Kids.</p>
+    <a class="btn btn-primary btn-lg" href="#sale" role="button">Shop Monsoon Sale</a>
+  </div>
+
+  <div class="container">
+
+    <!-- Monsoon Sale -->
+    <section id="sale" class="mb-5">
+      <h2 class="section-title">Monsoon Sale Offers</h2>
+      <div class="row g-4" id="saleShoes"></div>
+    </section>
+
+    <!-- Shoes Sections -->
+    <section id="women" class="mb-5">
+      <h2 class="section-title">Women Shoes</h2>
+      <div class="row g-4 shoes-section" data-category="women" id="womenShoes"></div>
+    </section>
+
+    <section id="men" class="mb-5">
+      <h2 class="section-title">Men Shoes</h2>
+      <div class="row g-4 shoes-section" data-category="men" id="menShoes"></div>
+    </section>
+
+    <section id="kids" class="mb-5">
+      <h2 class="section-title">Kids Shoes</h2>
+      <div class="row g-4 shoes-section" data-category="kids" id="kidsShoes"></div>
+    </section>
+
+  </div>
+
+  <!-- Billing & Delivery -->
+  <div class="container mb-5">
+    <h2 class="text-center mb-4">Billing & Delivery</h2>
+    <form id="checkoutForm">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label for="fullName" class="form-label">Full Name</label>
+          <input type="text" class="form-control" id="fullName" required>
+        </div>
+        <div class="col-md-6">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" required>
+        </div>
+      </div>
+      <div class="row g-3 mt-2">
+        <div class="col-md-6">
+          <label for="phone" class="form-label">Phone</label>
+          <input type="tel" class="form-control" id="phone" required>
+        </div>
+        <div class="col-md-6">
+          <label for="address" class="form-label">Address</label>
+          <input type="text" class="form-control" id="address" required>
+        </div>
+      </div>
+      <div class="row g-3 mt-2">
+        <div class="col-md-4">
+          <label for="city" class="form-label">City</label>
+          <input type="text" class="form-control" id="city" required>
+        </div>
+        <div class="col-md-4">
+          <label for="pincode" class="form-label">Pincode</label>
+          <input type="number" class="form-control" id="pincode" required>
+        </div>
+        <div class="col-md-4">
+          <label for="distance" class="form-label">Distance from Dockyard (km)</label>
+          <input type="number" class="form-control" id="distance" placeholder="Enter km" required>
+        </div>
+      </div>
+      <div class="mt-4">
+        <button type="button" class="btn btn-primary" id="pay-button">Check Delivery & Pay</button>
+      </div>
+    </form>
+    <div class="result" id="deliveryResult" style="display:none;"></div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white text-center py-4">
+    &copy; 2025 LA SOLE. All Rights Reserved.
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script>
+    const shoes = [
+      {name:"LA Air Nova", category:"men", price:5000, discount:30, image:"img4.jpg"},
+      {name:"LA Stellar", category:"men", price:6000, discount:30, image:"img5.jpg"},
+      {name:"LA Glide", category:"men", price:5500, discount:30, image:"img6.jpg"},
+      {name:"LA Spark", category:"women", price:5200, discount:30, image:"img1.jpg"},
+      {name:"LA Run", category:"women", price:5800, discount:30, image:"img2.jpg"},
+      {name:"LA Diva", category:"women", price:6000, discount:30, image:"img3.jpg"},
+      {name:"LA Kid Zoom", category:"kids", price:5000, discount:30, image:"img7.jpg"},
+      {name:"LA Mini Star", category:"kids", price:5200, discount:30, image:"img8.jpg"},
+      {name:"LA Tiny Runner", category:"kids", price:5500, discount:30, image:"img9.jpg"},
+    ];
+
+    function generateCards() {
+      const womenContainer = document.getElementById('womenShoes');
+      const menContainer = document.getElementById('menShoes');
+      const kidsContainer = document.getElementById('kidsShoes');
+      const saleContainer = document.getElementById('saleShoes');
+
+      shoes.forEach(shoe => {
+        const discountedPrice = Math.round(shoe.price * (1 - shoe.discount / 100));
+        const card = document.createElement('div');
+        card.classList.add('col-md-3');
+        card.innerHTML = `
+          <div class="card position-relative">
+            <span class="sale-badge">${shoe.discount}% OFF</span>
+            <img src="${shoe.image}" class="card-img-top" alt="${shoe.name}">
+            <div class="card-body">
+              <h5 class="card-title">${shoe.name}</h5>
+              <p class="card-text">Price: ₹${discountedPrice}</p>
+              <a href="#checkoutForm" class="btn btn-primary">Buy Now</a>
+            </div>
+          </div>
+        `;
+        if (shoe.category === "women") womenContainer.appendChild(card);
+        else if (shoe.category === "men") menContainer.appendChild(card);
+        else if (shoe.category === "kids") kidsContainer.appendChild(card);
+        saleContainer.appendChild(card.cloneNode(true));
+      });
+    }
+
+    function filterShoes() {
+      const input = document.getElementById('searchInput').value.toLowerCase();
+      const sections = document.querySelectorAll('.shoes-section');
+      sections.forEach(section => {
+        if (section.dataset.category.includes(input)) section.style.display = "flex";
+        else section.style.display = "none";
+      });
+      return false;
+    }
+
+    function calculateDeliveryCost(km) {
+      return 50 + (km * 10); // Base ₹50 + ₹10/km
+    }
+
+    document.getElementById('pay-button').onclick = function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById('fullName').value;
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+      const address = document.getElementById('address').value;
+      const city = document.getElementById('city').value;
+      const pincode = document.getElementById('pincode').value;
+      const distance = parseInt(document.getElementById('distance').value);
+
+      if (!name || !email || !phone || !address || !city || !pincode || isNaN(distance)) {
+        alert("Please fill in all the billing details.");
+        return;
+      }
+
+      const delivery = calculateDeliveryCost(distance);
+      const basePrice = 1000; // Example item price
+      const total = basePrice + delivery;
+
+      const resultBox = document.getElementById('deliveryResult');
+      resultBox.style.display = "block";
+      resultBox.innerHTML = `<div class="alert alert-info mt-3">
+        Delivery charge: ₹${delivery}<br>
+        Total Payable: ₹${total}
+      </div>`;
+
+      const options = {
+        "key": "rzp_test_lzy7Z3rYGMLviU",
+        "amount": total * 100,
+        "currency": "INR",
+        "name": "LA SOLE",
+        "description": "Shoe Purchase",
+        "handler": function (response) {
+          alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
+        },
+        "prefill": {
+          "name": name,
+          "email": email,
+          "contact": phone
+        },
+        "theme": {
+          "color": "#0b1a3d"
+        }
+      };
+
+      const rzp = new Razorpay(options);
+      rzp.open();
+    };
+
+    generateCards();
+  </script>
+
+</body>
+</html>
