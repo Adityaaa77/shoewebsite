@@ -3,13 +3,13 @@ version: 0.2
 phases:
   install:
     commands:
-      - echo "No dependencies to install for HTML/CSS/Bootstrap"
+      - echo "No dependencies to install"
   build:
     commands:
       - echo "No build step required"
   post_build:
     commands:
-      - echo "Build completed"
+      - echo "Deployment package ready"
 
 artifacts:
   files:
